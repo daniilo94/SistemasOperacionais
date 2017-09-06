@@ -7,20 +7,27 @@
 </head>
 <body>
 <button id="a">Click</button>
-<div>
-    <hr>
-    Venda
-    <p id="sell"></p>
-    <hr>
-    Compra
-    <p id="buy"></p>
+<section style="width: 45%; float: left">
+    <div>
+        <hr>
+        Venda
+        <p id="sell"></p>
+        <hr>
+        Compra
+        <p id="buy"></p>
+    </div>
+</section>
+<section style="width: 45%; float: right;">
     <hr>
     Livro de ofertas
     <p id="order"></p>
     <hr>
-</div>
+</section>
+
 
 <script>
+
+    var x = 1;
 
     $("#a").click(function () {
         xhr = new XMLHttpRequest();
@@ -53,7 +60,12 @@
                 break;
             }
         }
+        if ($("#sell").html() != JSON.stringify(lastSell))
+            console.log("sell diferente " + x++);
         $("#sell").html(JSON.stringify(lastSell));
+
+        if ($("#buy").html() != JSON.stringify(lastBuy))
+            console.log("buy diferente " + x++);
         $("#buy").html(JSON.stringify(lastBuy));
     }
 
@@ -78,8 +90,8 @@
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     $("#order").html(xhr.responseText);
-                    var b = xhr.responseText.replace(",", "\n");
-                    console.log(b);
+                    if ($("#order").html() != xhr.responseText)
+                        console.log("order diferente " + x++);
 //                    $("#order").html(b);
                 } else {
                     alert(xhr.status);
@@ -89,8 +101,12 @@
         xhr.open("GET", "https://broker.negociecoins.com.br/api/v3/BTCBRL/orderbook", true);
         xhr.send();
     }
-    setInterval(function (){pesquisarSellBuy();}, 1000);
-    setInterval(function (){pesquisarOrder();}, 1000);
+    setInterval(function () {
+        pesquisarSellBuy();
+    }, 1000);
+    setInterval(function () {
+        pesquisarOrder();
+    }, 1000);
 
 </script>
 </body>
