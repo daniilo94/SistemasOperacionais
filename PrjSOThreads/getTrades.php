@@ -55,7 +55,9 @@ function treatResponse($response)
     }
     date_default_timezone_set("Brazil/East");
     $lastBuy["date"] = date('d-m-Y H:i:s', $lastBuy["date"]);
+    $lastBuy["type"] = "Compra";
     $lastSell["date"] = date('d-m-Y H:i:s', $lastSell["date"]);
+    $lastSell["type"] = "Venda";
 
     $data2[] = $lastBuy;
     $data2[] = $lastSell;
